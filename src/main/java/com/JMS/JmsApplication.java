@@ -11,12 +11,27 @@ import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jms.support.converter.MappingJackson2MessageConverter;
 import org.springframework.jms.support.converter.MessageConverter;
 import org.springframework.jms.support.converter.MessageType;
+import org.springframework.web.servlet.ViewResolver;
+import org.springframework.web.servlet.view.xslt.XsltView;
+import org.springframework.web.servlet.view.xslt.XsltViewResolver;
 
 import javax.jms.ConnectionFactory;
 
 @EnableJms
 @SpringBootApplication
 public class JmsApplication {
+
+	@Bean
+	public ViewResolver getXLTViewResolver() {
+		final XsltViewResolver xsltViewResolver = new XsltViewResolver();
+		xsltViewResolver.setOrder(1);
+		xsltViewResolver.setSourceKey("xmlSource");
+		xsltViewResolver.setViewClass(XsltView.class);
+		xsltViewResolver.setViewNames("lists");
+		xsltViewResolver.setPrefix("/WEB-INF/xslt/");
+		xsltViewResolver.setSuffix(".xsl");
+		return xsltViewResolver;
+	}
 
 	@Bean
 	public JmsListenerContainerFactory<?> myFactory(ConnectionFactory connectionFactory,
@@ -35,6 +50,7 @@ public class JmsApplication {
 		converter.setTypeIdPropertyName("_type");
 		return converter;
 	}
+
 
 	public static void main(String[] args) {
 		SpringApplication.run(JmsApplication.class, args);
