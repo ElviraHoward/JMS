@@ -1,8 +1,10 @@
 package com.JMS.model;
 
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -18,17 +20,34 @@ public class Director implements Serializable {
     @GenericGenerator(name = "num", strategy = "increment")
     @GeneratedValue(generator = "num")
     @Column(name = "id_director")
+    @JacksonXmlProperty(localName = "id")
     private Long id;
 
     @Column(name = "name")
+    @JacksonXmlProperty(localName = "name")
     private String name;
 
     @Column(name = "count_of_oscars")
+    @JacksonXmlProperty(localName = "countOfOscars")
     private int countOfOscars;
 
     public Director() {
     }
 
+    public Director(Director director) {
+        name = director.getName();
+        countOfOscars = director.getCountOfOscars();
+    }
+
+    @NotNull
+    public Director createEntity() {
+        Director director = new Director();
+        director.setId(id);
+        director.setName(name);
+        director.setCountOfOscars(countOfOscars);
+
+        return director;
+    }
     @Override
     public String toString() {
         return name;

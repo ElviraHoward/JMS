@@ -1,5 +1,6 @@
 package com.JMS.service;
 
+import com.JMS.jms.ChangesDTO;
 import com.JMS.model.Change;
 import com.JMS.repository.ChangeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,7 @@ public class ChangeService {
     @Autowired
     ChangeRepository changeRepository;
 
-    public Change save(Change change) {
+    public Change save(ChangesDTO change) {
         return changeRepository.save(change);
     }
 

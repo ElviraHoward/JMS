@@ -24,10 +24,17 @@ public class Receiver implements Serializable {
     @Column(name = "class")
     private String classEntity;
 
-    @Column(name = "values")
-    private String values;
+    @Column(name = "type")
+    private Change.ChangeEnum type;
 
     public Receiver() {
+    }
+
+    public Receiver(Long id, String email, String classEntity, Change.ChangeEnum type) {
+        this.id = id;
+        this.email = email;
+        this.classEntity = classEntity;
+        this.type = type;
     }
 
     @Override
@@ -36,7 +43,7 @@ public class Receiver implements Serializable {
                 "id=" + id +
                 ", email='" + email + '\'' +
                 ", classEntity=" + classEntity +
-                ", values='" + values + '\'' +
+                ", type='" + type + '\'' +
                 '}';
     }
 
@@ -64,11 +71,11 @@ public class Receiver implements Serializable {
         this.classEntity = classEntity;
     }
 
-    public String getValues() {
-        return values;
+    public Change.ChangeEnum getType() {
+        return type;
     }
 
-    public void setValues(String values) {
-        this.values = values;
+    public void setType(Change.ChangeEnum type) {
+        this.type = type;
     }
 }
